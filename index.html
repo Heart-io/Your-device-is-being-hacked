@@ -3,54 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>8-Ball GUI</title>
+    <title>Device Encryption Simulation</title>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        /* Embed CSS */
+        body, html {
             margin: 0;
-            background-color: white;
-        }
-
-        .ball {
-            width: 200px;
-            height: 200px;
+            padding: 0;
+            width: 100%;
+            height: 100%;
             background-color: black;
-            border-radius: 50%;
+            color: green;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
+            font-family: 'Courier New', Courier, monospace;
         }
 
-        .inner-circle {
-            width: 100px;
-            height: 100px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        #content {
+            text-align: center;
+            display: none;
         }
 
-        .number {
-            font-size: 48px;
+        .ascii {
+            font-size: 24px;
+            white-space: pre;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #injectButton {
+            background-color: green;
             color: black;
-            font-family: Arial, sans-serif;
+            font-size: 20px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #injectButton:hover {
+            background-color: darkgreen;
         }
     </style>
 </head>
 <body>
-    <div class="ball">
-        <div class="inner-circle">
-            <span class="number">8</span>
+    <div id="content">
+        <div id="randomText"></div>
+        <div id="asciiText" class="ascii hidden">
+            Encrypting device data...
         </div>
     </div>
+    <button id="injectButton">Inject</button>
+
     <script>
-        // JavaScript can be added here if needed for interactivity
+        // Embed JavaScript
+        document.getElementById("injectButton").addEventListener("click", function() {
+            this.style.display = 'none'; // Hide the button
+            document.getElementById("content").style.display = 'block'; // Show the content
+
+            const randomTexts = [
+                "Encrypting device...",
+                "Getting device data...",
+                "Locking device..."
+            ];
+            const randomTextElement = document.getElementById("randomText");
+
+            let index = 0;
+            const interval = setInterval(function() {
+                randomTextElement.textContent = randomTexts[Math.floor(Math.random() * randomTexts.length)];
+                index++;
+                if (index >= 5) {
+                    clearInterval(interval);
+                    randomTextElement.textContent = "";
+                    document.getElementById("asciiText").classList.remove("hidden");
+                    setTimeout(function() {
+                        const randomLink = getRandomLink();
+                        window.open(randomLink, '_blank'); // Open the random link in a new tab
+                        window.close(); // Close the current tab
+                    }, 3000);
+                }
+            }, 1000);
+        });
+
+        function getRandomLink() {
+            const links = [
+                "https://example.com",
+                "https://another-example.com",
+                "https://yet-another-example.com"
+            ];
+            return links[Math.floor(Math.random() * links.length)];
+        }
     </script>
 </body>
 </html>
-
